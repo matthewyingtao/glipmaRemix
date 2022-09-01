@@ -1,34 +1,50 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@prisma/client': ^4.3.0
   '@remix-run/dev': ^1.7.0
   '@remix-run/eslint-config': ^1.7.0
   '@remix-run/node': ^1.7.0
   '@remix-run/react': ^1.7.0
   '@remix-run/serve': ^1.7.0
+  '@types/base64-stream': ^1.0.2
+  '@types/node': ^18.7.14
   '@types/react': ^18.0.15
   '@types/react-dom': ^18.0.6
+  base64-stream: ^1.0.0
   eslint: ^8.20.0
+  get-stream: ^6.0.1
   npm-run-all: ^4.1.5
+  prisma: ^4.3.0
   react: ^18.2.0
   react-dom: ^18.2.0
+  remix-auth: ^3.2.2
+  remix-auth-socials: ^1.0.2
   tailwindcss: ^3.1.8
   typescript: ^4.7.4
 
 dependencies:
+  '@prisma/client': 4.3.0_prisma@4.3.0
   '@remix-run/node': 1.7.0_biqbaboplfbrettd7655fr4n2y
   '@remix-run/react': 1.7.0_biqbaboplfbrettd7655fr4n2y
   '@remix-run/serve': 1.7.0_biqbaboplfbrettd7655fr4n2y
+  base64-stream: 1.0.0
+  get-stream: 6.0.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  remix-auth: 3.2.2_iwkoj4i7onot5qamk6olkm5qze
+  remix-auth-socials: 1.0.2_iwkoj4i7onot5qamk6olkm5qze
 
 devDependencies:
   '@remix-run/dev': 1.7.0_p6bz3zlyof7hasoqeidkhkiywu
   '@remix-run/eslint-config': 1.7.0_ehxjltspajcysklsgue4g44hsy
+  '@types/base64-stream': 1.0.2
+  '@types/node': 18.7.14
   '@types/react': 18.0.18
   '@types/react-dom': 18.0.6
   eslint: 8.23.0
   npm-run-all: 4.1.5
+  prisma: 4.3.0
   tailwindcss: 3.1.8
   typescript: 4.8.2
 
@@ -1493,6 +1509,28 @@ packages:
       json-parse-even-better-errors: 2.3.1
     dev: true
 
+  /@prisma/client/4.3.0_prisma@4.3.0:
+    resolution: {integrity: sha512-xCjLAOIOqVdjD+UZbUwx5dFocUmdsrMQFe0jXUswTUgc76NOQVh0L7Z+FCkNCVVZ9RSBfEFX22061Sa02OuPAQ==}
+    engines: {node: '>=14.17'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dependencies:
+      '@prisma/engines-version': 4.3.0-32.c875e43600dfe042452e0b868f7a48b817b9640b
+      prisma: 4.3.0
+    dev: false
+
+  /@prisma/engines-version/4.3.0-32.c875e43600dfe042452e0b868f7a48b817b9640b:
+    resolution: {integrity: sha512-8yWpXkQRmiSfsi2Wb/ZS5D3RFbeu/btL9Pm/gdF4phB0Lo5KGsDFMxFMgaD64mwED2nHc8ZaEJg/+4Jymb9Znw==}
+    dev: false
+
+  /@prisma/engines/4.3.0:
+    resolution: {integrity: sha512-JAyU7+QEpLkVtgVMYBSPQt9sUcgFqA/MdD4mK7yx+ZyDfHQlP+nT1rmqFPZ3MofR0mAha7nr3rx0ZNN46gLp9Q==}
+    requiresBuild: true
+
   /@remix-run/dev/1.7.0_p6bz3zlyof7hasoqeidkhkiywu:
     resolution: {integrity: sha512-2CBe6A+MqiFPN8aeeF1bq+T4HqtaQexn8VBCyrmEch1NVqsTn7nCDot3dDKkpwC729/hOi+mx20WXKCzd22HQQ==}
     engines: {node: '>=14'}
@@ -1742,6 +1780,12 @@ packages:
 
   /@types/aria-query/4.2.2:
     resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
+    dev: true
+
+  /@types/base64-stream/1.0.2:
+    resolution: {integrity: sha512-pPTps4oDwasxGcxpG6Ub8rAkVSPdekoolze0oza1mMFdlgXXKXE2zqCePBfemvWlGI92k9jE7kH3nz0+tJEXQw==}
+    dependencies:
+      '@types/node': 18.7.14
     dev: true
 
   /@types/cacheable-request/6.0.2:
@@ -2309,6 +2353,10 @@ packages:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: true
 
+  /base64-stream/1.0.0:
+    resolution: {integrity: sha512-BQQZftaO48FcE1Kof9CmXMFaAdqkcNorgc8CxesZv9nMbbTF1EFyQe89UOuh//QMmdtfUDXyO8rgUalemL5ODA==}
+    dev: false
+
   /basic-auth/2.0.1:
     resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
     engines: {node: '>= 0.8'}
@@ -2821,7 +2869,6 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.2
-    dev: true
 
   /decode-named-character-reference/1.0.2:
     resolution: {integrity: sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==}
@@ -4020,6 +4067,11 @@ packages:
     dependencies:
       pump: 3.0.0
     dev: true
+
+  /get-stream/6.0.1:
+    resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
+    engines: {node: '>=10'}
+    dev: false
 
   /get-symbol-description/1.0.0:
     resolution: {integrity: sha512-2EmdH1YvIQiZpltCNgkuiUnyukzxM/R6NDJX31Ke3BG1Nq5b0S2PhX59UKi9vZpPDQVdqn+1IcaAwnzTT5vCjw==}
@@ -5459,7 +5511,6 @@ packages:
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
-    dev: true
 
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -6010,6 +6061,14 @@ packages:
       parse-ms: 2.1.0
     dev: true
 
+  /prisma/4.3.0:
+    resolution: {integrity: sha512-Ii588H5IsbSun5BwpNQwrayrHKecFEZ6wDoJ7nr2IsqlMblmkA1dextGBObsG9tg+aIVhTrNa7OAbhbvEfqhdQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@prisma/engines': 4.3.0
+
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
     dev: true
@@ -6293,6 +6352,42 @@ packages:
       mdast-util-to-hast: 11.3.0
       unified: 10.1.2
     dev: true
+
+  /remix-auth-oauth2/1.3.0_iwkoj4i7onot5qamk6olkm5qze:
+    resolution: {integrity: sha512-vibb7jxzRmeTqkl2SORgTg5rZqSAt8VdAvz3JBJOAbjn1wScvEcHttAJDQHDhdtdDgJVaOjJ0K7QpQNEeZdi0A==}
+    peerDependencies:
+      '@remix-run/server-runtime': ^1.0.0
+    dependencies:
+      '@remix-run/server-runtime': 1.7.0_biqbaboplfbrettd7655fr4n2y
+      debug: 4.3.4
+      remix-auth: 3.2.2_iwkoj4i7onot5qamk6olkm5qze
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@remix-run/react'
+      - supports-color
+    dev: false
+
+  /remix-auth-socials/1.0.2_iwkoj4i7onot5qamk6olkm5qze:
+    resolution: {integrity: sha512-X0/tK3DI16R5XsOy2qKhgKa66NdoTcRLiUH5c5PFvBzetbogdX+7j/jgGFDa/t8Tf5nHUD1PlYN3LpR8CA8LgA==}
+    dependencies:
+      remix-auth: 3.2.2_iwkoj4i7onot5qamk6olkm5qze
+      remix-auth-oauth2: 1.3.0_iwkoj4i7onot5qamk6olkm5qze
+    transitivePeerDependencies:
+      - '@remix-run/react'
+      - '@remix-run/server-runtime'
+      - supports-color
+    dev: false
+
+  /remix-auth/3.2.2_iwkoj4i7onot5qamk6olkm5qze:
+    resolution: {integrity: sha512-VtzkfxeXbnXilupRTZkP40aik4vFSdwwRT96mbq0UBDMqHVRfQ7h9Y51HFrTufHJZEfAdkCopedMVvm0vQYKag==}
+    peerDependencies:
+      '@remix-run/react': ^1.0.0
+      '@remix-run/server-runtime': ^1.0.0
+    dependencies:
+      '@remix-run/react': 1.7.0_biqbaboplfbrettd7655fr4n2y
+      '@remix-run/server-runtime': 1.7.0_biqbaboplfbrettd7655fr4n2y
+      uuid: 8.3.2
+    dev: false
 
   /repeat-element/1.1.4:
     resolution: {integrity: sha512-LFiNfRcSu7KK3evMyYOuCzv3L10TW7yC1G2/+StMjK8Y6Vqd2MG7r/Qjw4ghtuCOjFvlnms/iMmLqpvW/ES/WQ==}
@@ -7218,6 +7313,11 @@ packages:
   /utils-merge/1.0.1:
     resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
     engines: {node: '>= 0.4.0'}
+
+  /uuid/8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    dev: false
 
   /uvu/0.5.6:
     resolution: {integrity: sha512-+g8ENReyr8YsOc6fv/NVJs2vFdHBnBNdfE49rshrTzDWOlUx4Gq7KOS2GD8eqhy2j+Ejq29+SbKH8yjkAqXqoA==}
