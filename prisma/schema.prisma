@@ -16,6 +16,7 @@ model User {
   profilePicture String?
   createdAt      DateTime @default(now())
   notes          Note[]
+  tags           Tag[]
 }
 
 model Note {
@@ -38,5 +39,6 @@ model Tag {
   name   String
   color  String
   userId String
+  user   User   @relation(fields: [userId], references: [id])
   notes  Note[]
 }
