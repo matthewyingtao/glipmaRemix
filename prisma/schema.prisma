@@ -19,12 +19,24 @@ model User {
 }
 
 model Note {
-  id         Int      @id @default(autoincrement())
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt  DateTime @default(now())
-  name       String
-  content    String
-  isPublic   Boolean  @default(false)
-  isComplete Boolean  @default(false)
+  id     Int    @id @default(autoincrement())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  tags   Tag[]
+
+  createdAt DateTime @default(now())
+  title     String?
+  content   String
+
+  isPublic   Boolean @default(false)
+  isReminder Boolean @default(false)
+  isComplete Boolean @default(false)
+}
+
+model Tag {
+  id     Int    @id @default(autoincrement())
+  name   String
+  color  String
+  userId String
+  notes  Note[]
 }
