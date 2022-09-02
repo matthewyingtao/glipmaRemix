@@ -59,12 +59,16 @@ export default function Submit() {
 					<h2 className="text-lg font-bold">Create New Tag</h2>
 					<input type="hidden" name="redirectTo" value="/submit" />
 					<div className="flex flex-col gap-2">
-						<label htmlFor="">Name</label>
-						<input className="border" type="text" name="tagName" />
+						<label htmlFor="">Tag Name</label>
+						<input
+							className="border rounded-md py-1 px-2 w-64"
+							type="text"
+							name="tagName"
+						/>
 					</div>
 					<div className="flex flex-col gap-2">
 						<label htmlFor="">Color</label>
-						<div className="flex gap-2">
+						<div className="grid grid-cols-6 gap-2 mb-2">
 							{
 								// 0 - 360 in 20 degree increments
 								[...Array(18).keys()].map((val) => {
@@ -72,10 +76,10 @@ export default function Submit() {
 									return (
 										<button
 											key={hue}
-											className={`h-8 w-8 rounded-md border ${
+											className={`h-8 w-8 rounded-md border transition-all ${
 												hue === colorHue
-													? "border-black shadow-md"
-													: "border-gray-500 opacity-75"
+													? "border-black shadow-lg scale-110"
+													: "border-gray-500 opacity-60 scale-90"
 											}`}
 											style={{ backgroundColor: getColor(hue) }}
 											onClick={() => setColorHue(hue)}
@@ -88,7 +92,7 @@ export default function Submit() {
 					</div>
 					<input type="hidden" name="tagColor" value={colorHue} />
 					<button
-						className="bg-white bg-paper px-6 py-2 rounded-full shadow-sm"
+						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
 						type="submit"
 					>
 						Create Tag
@@ -127,8 +131,11 @@ export default function Submit() {
 					<input type="checkbox" name="isPublic" id="isPublic" />
 					<label htmlFor="isTodo">Todo</label>
 					<input type="checkbox" name="isTodo" id="isTodo" />
-					<button className="border" type="submit">
-						Submit Data
+					<button
+						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
+						type="submit"
+					>
+						Create Note
 					</button>
 				</Form>
 			</main>

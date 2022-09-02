@@ -33,6 +33,7 @@ specifiers:
   remix-auth: ^3.2.2
   remix-auth-socials: ^1.0.2
   remix-utils: ^3.3.0
+  superjson-remix: ^0.1.2
   tailwindcss: ^3.1.8
   typescript: ^4.7.4
 
@@ -58,6 +59,7 @@ dependencies:
   remix-auth: 3.2.2_iwkoj4i7onot5qamk6olkm5qze
   remix-auth-socials: 1.0.2_iwkoj4i7onot5qamk6olkm5qze
   remix-utils: 3.3.0_c27im47vz2bb7ojngsecns5qrq
+  superjson-remix: 0.1.2_remix@1.7.0
 
 devDependencies:
   '@remix-run/dev': 1.7.0_p6bz3zlyof7hasoqeidkhkiywu
@@ -2865,6 +2867,13 @@ packages:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
 
+  /copy-anything/3.0.2:
+    resolution: {integrity: sha512-CzATjGXzUQ0EvuvgOCI6A4BGOo2bcVx8B+eC2nF862iv9fopnPQwlrbACakNCHRIJbCSBj+J/9JeDf60k64MkA==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.7
+    dev: false
+
   /copy-descriptor/0.1.1:
     resolution: {integrity: sha512-XgZ0pFcakEUlbwQEVNg3+QAis1FyTL3Qel9FYy8pSkQqoG3PNoT0bOCQtOXcOkur21r2Eq2kI+IE+gsmAEVlYw==}
     engines: {node: '>=0.10.0'}
@@ -4896,6 +4905,11 @@ packages:
     dependencies:
       call-bind: 1.0.2
 
+  /is-what/4.1.7:
+    resolution: {integrity: sha512-DBVOQNiPKnGMxRMLIYSwERAS5MVY1B7xYiGnpgctsOFvVDz9f9PFXXxMcTOHuoqYp4NK9qFYQaIC1NRRxLMpBQ==}
+    engines: {node: '>=12.13'}
+    dev: false
+
   /is-windows/1.0.2:
     resolution: {integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==}
     engines: {node: '>=0.10.0'}
@@ -6828,6 +6842,11 @@ packages:
       - typescript
     dev: false
 
+  /remix/1.7.0:
+    resolution: {integrity: sha512-dyEfEfzpuexTAe1EtadUpeE/NEJUSKBzbEBJtwAtPEeRcp8YzZW8O6lbCzRAbjkAgH6dlzTojVFY0x+NssTG6g==}
+    engines: {node: '>=14'}
+    dev: false
+
   /repeat-element/1.1.4:
     resolution: {integrity: sha512-LFiNfRcSu7KK3evMyYOuCzv3L10TW7yC1G2/+StMjK8Y6Vqd2MG7r/Qjw4ghtuCOjFvlnms/iMmLqpvW/ES/WQ==}
     engines: {node: '>=0.10.0'}
@@ -7355,6 +7374,24 @@ packages:
     dependencies:
       inline-style-parser: 0.1.1
     dev: true
+
+  /superjson-remix/0.1.2_remix@1.7.0:
+    resolution: {integrity: sha512-NkJd+V0zOMCUbwnaKsxNs1FXMWTAHppqaCTd9IKXDOoPtRkjxU8/7duQeJ9yC8L3J9eJ47CShkIS+NEhzlY6IQ==}
+    engines: {node: '>=10'}
+    requiresBuild: true
+    peerDependencies:
+      remix: '>=1.2.3'
+    dependencies:
+      remix: 1.7.0
+      superjson: 1.9.1
+    dev: false
+
+  /superjson/1.9.1:
+    resolution: {integrity: sha512-oT3HA2nPKlU1+5taFgz/HDy+GEaY+CWEbLzaRJVD4gZ7zMVVC4GDNFdgvAZt6/VuIk6D2R7RtPAiCHwmdzlMmg==}
+    engines: {node: '>=10'}
+    dependencies:
+      copy-anything: 3.0.2
+    dev: false
 
   /supports-color/5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
