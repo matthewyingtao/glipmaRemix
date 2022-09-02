@@ -18,7 +18,6 @@ export const links: LinksFunction = () => [
 ];
 
 type LoaderData = {
-	isLoggedIn: boolean;
 	tags: {
 		id: number;
 		name: string;
@@ -30,7 +29,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 	const userId = await authenticator.isAuthenticated(request);
 	const isLoggedIn = userId !== null;
 
-	if (!isLoggedIn) return redirect("/");
+	if (!isLoggedIn) return redirect("/login");
 
 	const tags = await db.tag.findMany({
 		where: {
@@ -39,18 +38,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 	});
 
 	return {
-		isLoggedIn,
 		tags: tags.map((tag) => ({ id: tag.id, name: tag.name, hue: tag.hue })),
 	};
 };
 
 export default function Submit() {
-	const { isLoggedIn, tags } = useLoaderData<LoaderData>();
+	const { tags } = useLoaderData<LoaderData>();
 	const [colorHue, setColorHue] = useState(0);
 
 	return (
 		<>
-			<Header isLoggedIn={isLoggedIn} />
+			<Header />
 			<main className="mx-gutter py-8">
 				<h1 className="text-5xl font-bold mb-12">Submit</h1>
 				<Form

@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import Header from "~/components/header";
 import type { NoteWithTags, UserWithNotes } from "~/types";
@@ -10,7 +11,6 @@ import { IoArchiveOutline, IoFolderOpenOutline } from "react-icons/io5";
 import NoteCard from "~/components/noteCard";
 
 type LoaderData = {
-	isLoggedIn: boolean;
 	user?: UserWithNotes | null;
 };
 
@@ -18,7 +18,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 	const userId = await authenticator.isAuthenticated(request);
 	const isLoggedIn = userId !== null;
 
-	if (!isLoggedIn) return { isLoggedIn, user: null };
+	if (!isLoggedIn) return redirect("/login");
 
 	const user = await db.user.findFirst({
 		where: {
@@ -36,15 +36,15 @@ export const loader: LoaderFunction = async ({ request }) => {
 		},
 	});
 
-	return { isLoggedIn, user };
+	return { user };
 };
 
 export default function Index() {
-	const { isLoggedIn, user } = useLoaderData<LoaderData>();
+	const { user } = useLoaderData<LoaderData>();
 
 	return (
 		<>
-			<Header isLoggedIn={isLoggedIn} />
+			<Header />
 			<main className="mx-gutter py-8">
 				<h1 className="font-bold text-5xl mb-12">Your Notes</h1>
 				<div className="grid md:grid-cols-[auto_1fr] gap-x-12 gap-y-24">
