@@ -1,18 +1,20 @@
 import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { authenticator } from "~/utils/auth.server";
-import { db } from "~/utils/db.server";
-
-import quillCss from "quill/dist/quill.snow.css";
+import QuillCss from "quill/dist/quill.snow.css";
 import { useState } from "react";
 import { ClientOnly } from "remix-utils";
+import CustomQuillCss from "../components/quill.css";
+
 import Header from "~/components/header";
 import Quill from "~/components/quill.client";
-import { getColor } from "~/utils/utils";
+import { authenticator } from "~/utils/auth.server";
+import { db } from "~/utils/db.server";
+import { getColor, getContrast } from "~/utils/utils";
 
 export const links: LinksFunction = () => [
-	{ rel: "stylesheet", href: quillCss },
+	{ rel: "stylesheet", href: QuillCss },
+	{ rel: "stylesheet", href: CustomQuillCss },
 ];
 
 type LoaderData = {
@@ -20,7 +22,7 @@ type LoaderData = {
 	tags: {
 		id: number;
 		name: string;
-		hue: string;
+		hue: number;
 	}[];
 };
 
@@ -57,7 +59,7 @@ export default function Submit() {
 					method="post"
 				>
 					<h2 className="text-lg font-bold">Create New Tag</h2>
-					<input type="hidden" name="redirectTo" value="/submit" />
+					<input type="hidden" name="redirectTo" value="/submit" required />
 					<div className="flex flex-col gap-2">
 						<label htmlFor="">Tag Name</label>
 						<input
@@ -99,7 +101,7 @@ export default function Submit() {
 					</button>
 				</Form>
 				<Form
-					className="flex flex-col items-start"
+					className="flex flex-col gap-4 items-start mb-12"
 					action="/actions/createNote"
 					method="post"
 				>
@@ -107,7 +109,7 @@ export default function Submit() {
 					<input type="hidden" name="redirectTo" value="/" />
 					<label htmlFor="noteTitle">Name</label>
 					<input
-						className="border"
+						className="border rounded-md py-1 px-2 w-64"
 						type="text"
 						name="noteTitle"
 						id="noteTitle"
@@ -118,19 +120,35 @@ export default function Submit() {
 						{() => <Quill defaultValue="Hello <b>Remix!</b>" />}
 					</ClientOnly>
 					<label htmlFor="tags">Tags</label>
-					{tags.map((tag) => {
-						const id = tag.id.toString();
-						return (
-							<div key={id}>
-								<input type="checkbox" name={id} id={id} />
-								<label htmlFor={id}>{tag.name}</label>
-							</div>
-						);
-					})}
-					<label htmlFor="isPublic">Public</label>
-					<input type="checkbox" name="isPublic" id="isPublic" />
-					<label htmlFor="isTodo">Todo</label>
-					<input type="checkbox" name="isTodo" id="isTodo" />
+					<div className="flex gap-2">
+						{tags.map((tag) => {
+							const id = tag.id.toString();
+							return (
+								<label
+									htmlFor={id}
+									className="flex gap-2 px-2 py-[2px] rounded-full cursor-pointer"
+									style={{
+										backgroundColor: getColor(tag.hue),
+										color: getContrast(tag.hue),
+									}}
+									key={id}
+								>
+									<input type="checkbox" name={id} id={id} />
+									<span>{tag.name}</span>
+								</label>
+							);
+						})}
+					</div>
+					<div className="flex gap-6">
+						<div className="flex gap-2">
+							<input type="checkbox" name="isPublic" id="isPublic" />
+							<label htmlFor="isPublic">Public</label>
+						</div>
+						<div className="flex gap-2">
+							<input type="checkbox" name="isTodo" id="isTodo" />
+							<label htmlFor="isTodo">Todo</label>
+						</div>
+					</div>
 					<button
 						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
 						type="submit"

@@ -30,6 +30,9 @@ export const loader: LoaderFunction = async ({ request }) => {
 				include: {
 					tags: true,
 				},
+				orderBy: {
+					createdAt: "desc",
+				},
 			},
 		},
 	});
@@ -45,8 +48,8 @@ export default function Index() {
 			<Header isLoggedIn={isLoggedIn} />
 			<main className="mx-gutter py-8">
 				<h1 className="font-bold text-5xl mb-12">Your Notes</h1>
-				<div className="grid grid-cols-[auto_1fr] gap-x-12">
-					<aside className="flex flex-col gap-8 bg-paper bg-white rounded-2xl pl-6 pr-12 py-8 h-fit">
+				<div className="grid md:grid-cols-[auto_1fr] gap-x-12 gap-y-24">
+					<aside className="sticky top-12 flex flex-col gap-8 bg-paper bg-white rounded-2xl pl-6 pr-12 py-8 h-fit">
 						<div className="flex items-center gap-4 text-lg">
 							<IoFolderOpenOutline className="h-8 w-8" />
 							<Link to="/">Notes</Link>

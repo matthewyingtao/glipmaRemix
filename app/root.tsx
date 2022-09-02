@@ -29,7 +29,7 @@ export const links: LinksFunction = () => [
 	},
 	{
 		rel: "stylesheet preload prefetch",
-		href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap",
+		href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Roboto+Mono&display=swap",
 		crossOrigin: "anonymous",
 	},
 	{ rel: "stylesheet", href: styles },
