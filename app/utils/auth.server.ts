@@ -34,9 +34,8 @@ authenticator.use(
 		async ({ profile }) => {
 			const userExists = await getUser(profile.id);
 
-			if (userExists !== null) {
-				return userExists.id;
-			}
+			if (userExists !== null) return userExists.id;
+
 
 			const user = await createUser(profile);
 			return user.id;
