@@ -8,17 +8,14 @@ specifiers:
   '@remix-run/react': ^1.7.0
   '@remix-run/serve': ^1.7.0
   '@remix-run/vercel': ^1.7.0
-  '@types/base64-stream': ^1.0.2
   '@types/dompurify': ^2.3.4
   '@types/jsdom': ^20.0.0
   '@types/node': ^18.7.14
   '@types/quill': ^2.0.9
   '@types/react': ^18.0.15
   '@types/react-dom': ^18.0.6
-  base64-stream: ^1.0.0
   dompurify: ^2.4.0
   eslint: ^8.20.0
-  get-stream: ^6.0.1
   jsdom: ^20.0.0
   npm-run-all: ^4.1.5
   prisma: ^4.3.1
@@ -43,9 +40,7 @@ dependencies:
   '@remix-run/node': 1.7.0_biqbaboplfbrettd7655fr4n2y
   '@remix-run/react': 1.7.0_biqbaboplfbrettd7655fr4n2y
   '@remix-run/vercel': 1.7.0_6exea6vgry5e5pdy5ohyy6ar5y
-  base64-stream: 1.0.0
   dompurify: 2.4.0
-  get-stream: 6.0.1
   jsdom: 20.0.0
   quill: 1.3.7
   quill-delta: 5.0.0
@@ -65,7 +60,6 @@ devDependencies:
   '@remix-run/dev': 1.7.0_p6bz3zlyof7hasoqeidkhkiywu
   '@remix-run/eslint-config': 1.7.0_ehxjltspajcysklsgue4g44hsy
   '@remix-run/serve': 1.7.0_biqbaboplfbrettd7655fr4n2y
-  '@types/base64-stream': 1.0.2
   '@types/dompurify': 2.3.4
   '@types/jsdom': 20.0.0
   '@types/node': 18.7.14
@@ -1852,12 +1846,6 @@ packages:
     resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
     dev: true
 
-  /@types/base64-stream/1.0.2:
-    resolution: {integrity: sha512-pPTps4oDwasxGcxpG6Ub8rAkVSPdekoolze0oza1mMFdlgXXKXE2zqCePBfemvWlGI92k9jE7kH3nz0+tJEXQw==}
-    dependencies:
-      '@types/node': 18.7.14
-    dev: true
-
   /@types/cacheable-request/6.0.2:
     resolution: {integrity: sha512-B3xVo+dlKM6nnKTcmm5ZtY/OL8bOAOd2Olee9M1zft65ox50OzjEHW91sDiU9j6cvW8Ejg1/Qkf4xd2kugApUA==}
     dependencies:
@@ -2517,10 +2505,6 @@ packages:
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: true
-
-  /base64-stream/1.0.0:
-    resolution: {integrity: sha512-BQQZftaO48FcE1Kof9CmXMFaAdqkcNorgc8CxesZv9nMbbTF1EFyQe89UOuh//QMmdtfUDXyO8rgUalemL5ODA==}
-    dev: false
 
   /basic-auth/2.0.1:
     resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
@@ -4591,11 +4575,6 @@ packages:
     dependencies:
       pump: 3.0.0
     dev: true
-
-  /get-stream/6.0.1:
-    resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
-    engines: {node: '>=10'}
-    dev: false
 
   /get-symbol-description/1.0.0:
     resolution: {integrity: sha512-2EmdH1YvIQiZpltCNgkuiUnyukzxM/R6NDJX31Ke3BG1Nq5b0S2PhX59UKi9vZpPDQVdqn+1IcaAwnzTT5vCjw==}

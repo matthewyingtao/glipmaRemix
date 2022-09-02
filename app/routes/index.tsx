@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 	const userId = await authenticator.isAuthenticated(request);
 	const isLoggedIn = userId !== null;
 
-	if (!isLoggedIn) return { isLoggedIn, user: null };
+	if (!isLoggedIn) return json({ isLoggedIn, user: null });
 
 	const user = await db.user.findFirst({
 		where: {
