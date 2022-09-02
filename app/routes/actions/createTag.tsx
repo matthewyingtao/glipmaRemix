@@ -17,12 +17,6 @@ export const action: ActionFunction = async ({ request }) => {
 	const tagName = bodyParams.get("tagName") as string;
 	const tagColor = bodyParams.get("tagColor") as string;
 
-	console.log({
-		tagName,
-		tagColor,
-		userId,
-	});
-
 	await db.tag.create({
 		data: {
 			name: tagName,

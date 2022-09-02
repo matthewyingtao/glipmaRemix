@@ -30,7 +30,7 @@ model Note {
   content   String
 
   isPublic   Boolean @default(false)
-  isReminder Boolean @default(false)
+  isTodo     Boolean @default(false)
   isComplete Boolean @default(false)
 }
 

@@ -1,12 +1,20 @@
-import type { User } from "@prisma/client";
+import type { Note, Tag, User } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { authenticator } from "~/utils/auth.server";
 import { db } from "~/utils/db.server";
 
+type NoteWithTags = Note & {
+	tags: Tag[];
+};
+
+type UserWithNotes = User & {
+	notes: NoteWithTags[];
+};
+
 type LoaderData = {
 	isLoggedIn: boolean;
-	user?: User | null;
+	user?: UserWithNotes | null;
 };
 
 export const loader: LoaderFunction = async ({
@@ -24,7 +32,15 @@ export const loader: LoaderFunction = async ({
 			where: {
 				id: userId,
 			},
+			include: {
+				notes: {
+					include: {
+						tags: true,
+					},
+				},
+			},
 		});
+
 		return {
 			isLoggedIn,
 			user,
@@ -37,10 +53,7 @@ export default function Index() {
 
 	return (
 		<div>
-			<Form action="/auth/discord" method="post">
-				<button className="contrast outline">login</button>
-			</Form>
-			{isLoggedIn && (
+			{isLoggedIn ? (
 				<>
 					<Form action="/auth/logout" method="post">
 						<button className="contrast outline">logout</button>
@@ -53,34 +66,35 @@ export default function Index() {
 						alt=""
 					/>
 				</>
+			) : (
+				<Form action="/auth/discord" method="post">
+					<button className="contrast outline">login</button>
+				</Form>
 			)}
 
-			<h1>Welcome to Remix</h1>
-			<ul>
-				<li>
-					<a
-						target="_blank"
-						href="https://remix.run/tutorials/blog"
-						rel="noreferrer"
-					>
-						15m Quickstart Blog Tutorial
-					</a>
-				</li>
-				<li>
-					<a
-						target="_blank"
-						href="https://remix.run/tutorials/jokes"
-						rel="noreferrer"
-					>
-						Deep Dive Jokes App Tutorial
-					</a>
-				</li>
-				<li>
-					<a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-						Remix Docs
-					</a>
-				</li>
-			</ul>
+			<h1 className="font-bold text-xl">Notes</h1>
+
+			{user?.notes?.map((note) => {
+				return (
+					<div key={note.id}>
+						<h3 className="text-lg text-gray-700">{note.title}</h3>
+						<div dangerouslySetInnerHTML={{ __html: note.content }} />
+						{note.tags?.map((tag) => {
+							return (
+								<div key={tag.id}>
+									<span
+										style={{
+											backgroundColor: `#${tag.color}`,
+										}}
+									>
+										{tag.name}
+									</span>
+								</div>
+							);
+						})}
+					</div>
+				);
+			})}
 		</div>
 	);
 }
