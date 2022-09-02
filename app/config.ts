@@ -1,4 +1,4 @@
 export const siteUrl =
 	process.env.NODE_ENV === "production"
-		? "replacethissometime"
+		? "https://glipma.vercel.app"
 		: "http://localhost:3000";
