@@ -7,7 +7,6 @@ import { db } from "~/utils/db.server";
 
 import { FiSend } from "react-icons/fi";
 import { IoArchiveOutline, IoFolderOpenOutline } from "react-icons/io5";
-import { json } from "remix-utils";
 import NoteCard from "~/components/noteCard";
 
 type LoaderData = {
@@ -19,7 +18,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 	const userId = await authenticator.isAuthenticated(request);
 	const isLoggedIn = userId !== null;
 
-	if (!isLoggedIn) return json({ isLoggedIn, user: null });
+	if (!isLoggedIn) return { isLoggedIn, user: null };
 
 	const user = await db.user.findFirst({
 		where: {
@@ -37,7 +36,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 		},
 	});
 
-	return json({ isLoggedIn, user });
+	return { isLoggedIn, user };
 };
 
 export default function Index() {
