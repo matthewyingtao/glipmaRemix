@@ -3,35 +3,33 @@
 @tailwind utilities;
 
 body {
-	@apply text-gray-700 bg-gray-50;
+	@apply text-gray-700 bg-gray-100;
+	background-image: url("/paper.webp");
+}
+
+.bg-paper {
 	background-image: url("/paper.webp");
 }
 
 :root {
-	--gutter: 25px;
+	--gutter: 1rem;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 640px) {
 	:root {
-		--gutter: 45px;
+		--gutter: max(1rem, 8vw);
 	}
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 800px) {
 	:root {
-		--gutter: 85px;
+		--gutter: max(1rem, 12vw);
 	}
 }
 
 @media screen and (min-width: 1800px) {
 	:root {
-		--gutter: 140px;
-	}
-}
-
-@media screen and (min-width: 2048px) {
-	:root {
-		--gutter: 12vw;
+		--gutter: max(1rem, 15vw);
 	}
 }
 

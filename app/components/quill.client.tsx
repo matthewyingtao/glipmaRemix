@@ -1,9 +1,25 @@
+import QuillGlobal from "quill";
 import type Delta from "quill-delta";
+// @ts-ignore
+import ImageCompress from "quill-image-compress";
+import MagicUrl from "quill-magic-url";
 import { useCallback, useEffect, useState } from "react";
 import { useQuill } from "react-quilljs";
 
 export default function Quill({ defaultValue }: { defaultValue?: string }) {
-	const { quill, quillRef } = useQuill({});
+	const { quill, quillRef } = useQuill({
+		modules: {
+			imageCompress: {
+				imageType: "image/webp", // default
+			},
+		},
+	});
+
+	if (QuillGlobal && !quill) {
+		// For execute this line only once.
+		QuillGlobal.register("modules/magicUrl", MagicUrl);
+		QuillGlobal.register("modules/imageCompress", ImageCompress);
+	}
 
 	const [content, setContent] = useState<Delta | undefined>(undefined);
 

@@ -20,7 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
 	await db.tag.create({
 		data: {
 			name: tagName,
-			color: tagColor,
+			hue: parseInt(tagColor),
 			userId: userId,
 		},
 	});

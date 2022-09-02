@@ -37,7 +37,7 @@ model Note {
 model Tag {
   id     Int    @id @default(autoincrement())
   name   String
-  color  String
+  hue    Int
   userId String
   user   User   @relation(fields: [userId], references: [id])
   notes  Note[]

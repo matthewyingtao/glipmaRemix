@@ -1,8 +1,13 @@
 import type { Note, Tag, User } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
+import Header from "~/components/header";
 import { authenticator } from "~/utils/auth.server";
 import { db } from "~/utils/db.server";
+
+import { FiSend } from "react-icons/fi";
+import { IoArchiveOutline, IoFolderOpenOutline } from "react-icons/io5";
+import { getColor } from "~/utils/utils";
 
 type NoteWithTags = Note & {
 	tags: Tag[];
@@ -23,78 +28,83 @@ export const loader: LoaderFunction = async ({
 	const userId = await authenticator.isAuthenticated(request);
 	const isLoggedIn = userId !== null;
 
-	if (!isLoggedIn) {
-		return {
-			isLoggedIn,
-		};
-	} else {
-		const user = await db.user.findFirst({
-			where: {
-				id: userId,
-			},
-			include: {
-				notes: {
-					include: {
-						tags: true,
-					},
+	if (!isLoggedIn) return { isLoggedIn, user: null };
+
+	const user = await db.user.findFirst({
+		where: {
+			id: userId,
+		},
+		include: {
+			notes: {
+				include: {
+					tags: true,
 				},
 			},
-		});
+		},
+	});
 
-		return {
-			isLoggedIn,
-			user,
-		};
-	}
+	return { isLoggedIn, user };
 };
 
 export default function Index() {
 	const { isLoggedIn, user } = useLoaderData<LoaderData>();
 
 	return (
-		<div>
-			{isLoggedIn ? (
-				<>
-					<Form action="/auth/logout" method="post">
-						<button className="contrast outline">logout</button>
-					</Form>
-					<div>{user?.id}</div>
-					<div>{user?.username}</div>
-					<div>{user?.createdAt}</div>
-					<img
-						src={`https://cdn.discordapp.com/avatars/${user?.id}/${user?.profilePicture}.png`}
-						alt=""
-					/>
-				</>
-			) : (
-				<Form action="/auth/discord" method="post">
-					<button className="contrast outline">login</button>
-				</Form>
-			)}
+		<>
+			<Header isLoggedIn={isLoggedIn} />
+			<main className="mx-gutter py-8">
+				<h1 className="font-bold text-5xl mb-12">Your Notes</h1>
+				<div className="grid grid-cols-[auto_1fr] gap-x-12">
+					<aside className="flex flex-col gap-8 bg-paper bg-white rounded-2xl pl-6 pr-12 py-8 h-fit">
+						<div className="flex items-center gap-4 text-lg">
+							<IoFolderOpenOutline className="h-8 w-8" />
+							<Link to="/">Notes</Link>
+						</div>
+						<div className="flex items-center gap-4 text-lg">
+							<FiSend className="h-8 w-8" />
+							<Link to="/submit">Submit</Link>
+						</div>
+						<div className="flex items-center gap-4 text-lg">
+							<IoArchiveOutline className="h-8 w-8" />
+							<Link to="/">Archive</Link>
+						</div>
+					</aside>
 
-			<h1 className="font-bold text-xl">Notes</h1>
-
-			{user?.notes?.map((note) => {
-				return (
-					<div key={note.id}>
-						<h3 className="text-lg text-gray-700">{note.title}</h3>
-						<div dangerouslySetInnerHTML={{ __html: note.content }} />
-						{note.tags?.map((tag) => {
+					<div className="flex flex-col gap-8">
+						{user?.notes?.map((note) => {
 							return (
-								<div key={tag.id}>
-									<span
-										style={{
-											backgroundColor: `#${tag.color}`,
-										}}
-									>
-										{tag.name}
-									</span>
+								<div
+									className="bg-paper bg-yellow-200 p-8 rounded-2xl shadow-md"
+									key={note.id}
+								>
+									<div className="flex gap-4 items-center mb-4">
+										<h3 className="text-lg text-gray-700 font-bold">
+											{note.title}
+										</h3>
+										<div className="flex gap-2">
+											{note.tags?.map((tag) => {
+												return (
+													<div key={tag.id}>
+														<span
+															className="px-2 py-[2px] rounded-full"
+															style={{
+																backgroundColor: getColor(tag.hue),
+															}}
+														>
+															{tag.name}
+														</span>
+													</div>
+												);
+											})}
+										</div>
+									</div>
+									<div dangerouslySetInnerHTML={{ __html: note.content }} />
 								</div>
 							);
 						})}
 					</div>
-				);
-			})}
-		</div>
+				</div>
+			</main>
+		</>
 	);
 }
