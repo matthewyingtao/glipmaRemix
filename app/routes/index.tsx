@@ -1,13 +1,13 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import Header from "~/components/header";
-import type { UserWithNotes } from "~/types";
+import type { NoteWithTags, UserWithNotes } from "~/types";
 import { authenticator } from "~/utils/auth.server";
 import { db } from "~/utils/db.server";
 
 import { FiSend } from "react-icons/fi";
 import { IoArchiveOutline, IoFolderOpenOutline } from "react-icons/io5";
-import { json, useLoaderData } from "superjson-remix";
+import { json } from "remix-utils";
 import NoteCard from "~/components/noteCard";
 
 type LoaderData = {
@@ -66,7 +66,12 @@ export default function Index() {
 
 					<div className="flex flex-col gap-8">
 						{user?.notes?.map((note) => {
-							return <NoteCard key={note.id} note={note} />;
+							return (
+								<NoteCard
+									key={note.id}
+									note={note as unknown as NoteWithTags}
+								/>
+							);
 						})}
 					</div>
 				</div>
