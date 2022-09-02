@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	@apply text-gray-700 bg-gray-50;
+	background-image: url("/paper.webp");
+}
+
+:root {
+	--gutter: 25px;
+}
+
+@media screen and (min-width: 768px) {
+	:root {
+		--gutter: 45px;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	:root {
+		--gutter: 85px;
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	:root {
+		--gutter: 140px;
+	}
+}
+
+@media screen and (min-width: 2048px) {
+	:root {
+		--gutter: 12vw;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html,
+	body {
+		scroll-behavior: smooth;
+	}
+}
