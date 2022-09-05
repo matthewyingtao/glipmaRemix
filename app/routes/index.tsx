@@ -2,7 +2,7 @@ import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import Header from "~/components/header";
-import type { NoteWithTags, UserWithNotes } from "~/types";
+import type { NoteWithTags } from "~/types";
 import { authenticator } from "~/utils/auth.server";
 import { db } from "~/utils/db.server";
 
@@ -11,7 +11,7 @@ import { IoArchiveOutline, IoFolderOpenOutline } from "react-icons/io5";
 import NoteCard from "~/components/noteCard";
 
 type LoaderData = {
-	user?: UserWithNotes | null;
+	notes?: NoteWithTags[] | null;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -20,27 +20,23 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 	if (!isLoggedIn) return redirect("/login");
 
-	const user = await db.user.findUnique({
+	const notes = await db.note.findMany({
 		where: {
-			id: userId,
+			userId,
 		},
 		include: {
-			notes: {
-				include: {
-					tags: true,
-				},
-				orderBy: {
-					createdAt: "desc",
-				},
-			},
+			tags: true,
+		},
+		orderBy: {
+			createdAt: "desc",
 		},
 	});
 
-	return { user };
+	return { notes };
 };
 
 export default function Index() {
-	const { user } = useLoaderData<LoaderData>();
+	const { notes } = useLoaderData<LoaderData>();
 
 	return (
 		<>
@@ -64,7 +60,7 @@ export default function Index() {
 					</aside>
 
 					<div className="flex flex-col gap-8">
-						{user?.notes?.map((note) => {
+						{notes?.map((note) => {
 							return (
 								<NoteCard
 									key={note.id}

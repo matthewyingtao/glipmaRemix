@@ -1,16 +1,19 @@
+import type { UseFloatingReturn } from "@floating-ui/react-dom";
+import { autoUpdate, offset, shift, useFloating } from "@floating-ui/react-dom";
 import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import QuillCss from "quill/dist/quill.snow.css";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { ClientOnly } from "remix-utils";
-import CustomQuillCss from "../components/quill.css";
-
-import Header from "~/components/header";
-import Quill from "~/components/quill.client";
 import { authenticator } from "~/utils/auth.server";
 import { db } from "~/utils/db.server";
-import { getColor, getContrast } from "~/utils/utils";
+import { getBgColor, getColor, getContrast } from "~/utils/utils";
+
+import { AnimatePresence, motion } from "framer-motion";
+import QuillCss from "quill/dist/quill.snow.css";
+import Header from "~/components/header";
+import Quill from "~/components/quill.client";
+import CustomQuillCss from "../components/quill.css";
 
 export const links: LinksFunction = () => [
 	{ rel: "stylesheet", href: QuillCss },
@@ -44,15 +47,132 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Submit() {
 	const { tags } = useLoaderData<LoaderData>();
-	const [colorHue, setColorHue] = useState(0);
+	const [creatingNewTag, toggleCreatingNewTag] = useReducer(
+		(prev) => !prev,
+		false
+	);
+
+	const floatingReturn = useFloating({
+		placement: "top-start",
+		whileElementsMounted: autoUpdate,
+		middleware: [shift(), offset(12)],
+	});
 
 	return (
 		<>
 			<Header />
-			<main className="mx-gutter py-8">
-				<h1 className="text-5xl font-bold mb-12">Submit</h1>
+			<main className="relative mx-gutter py-8">
 				<Form
 					className="flex flex-col gap-4 items-start mb-12"
+					action="/actions/createNote"
+					method="post"
+				>
+					<h1 className="text-5xl font-bold mb-6">Create New Note</h1>
+					<input type="hidden" name="redirectTo" value="/" />
+					<label htmlFor="noteTitle">Name</label>
+					<input
+						className="border border-gray-400 rounded-md py-1 px-2 w-64"
+						type="text"
+						name="noteTitle"
+						id="noteTitle"
+					/>
+					<ClientOnly
+						fallback={<div style={{ width: 500, height: 300 }}></div>}
+					>
+						{() => <Quill defaultValue="Hello <b>Remix!</b>" />}
+					</ClientOnly>
+					<label htmlFor="tags" ref={floatingReturn.reference}>
+						Tags
+					</label>
+					<div className="flex gap-2 flex-wrap">
+						{tags.map((tag) => {
+							const id = tag.id.toString();
+							return (
+								<label
+									htmlFor={id}
+									className="flex gap-2 px-2 py-[2px] rounded-full cursor-pointer"
+									style={{
+										backgroundColor: getColor(tag.hue),
+										color: getContrast(tag.hue),
+									}}
+									key={id}
+								>
+									<input type="checkbox" name={id} id={id} />
+									<span>{tag.name}</span>
+								</label>
+							);
+						})}
+						<button
+							type="button"
+							onClick={toggleCreatingNewTag}
+							className="underline text-blue-600"
+						>
+							Add another
+						</button>
+					</div>
+					<div className="flex gap-6">
+						<div className="flex gap-2">
+							<input type="checkbox" name="isPublic" id="isPublic" />
+							<label htmlFor="isPublic">Public</label>
+						</div>
+						<div className="flex gap-2">
+							<input type="checkbox" name="isTodo" id="isTodo" />
+							<label htmlFor="isTodo">Todo</label>
+						</div>
+					</div>
+					<button
+						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
+						type="submit"
+					>
+						Create Note
+					</button>
+				</Form>
+				<AnimatePresence>
+					{creatingNewTag && (
+						<CreateNewTag
+							floatingReturn={floatingReturn}
+							toggleOpen={toggleCreatingNewTag}
+						/>
+					)}
+				</AnimatePresence>
+			</main>
+		</>
+	);
+}
+
+function CreateNewTag({
+	floatingReturn,
+	toggleOpen,
+}: {
+	floatingReturn: UseFloatingReturn;
+	toggleOpen: () => void;
+}) {
+	const { x, y, floating, strategy } = floatingReturn;
+	const [colorHue, setColorHue] = useState(0);
+
+	return (
+		<motion.div
+			ref={floating}
+			style={{
+				position: strategy,
+				top: y ?? 0,
+				left: x ?? 0,
+				transformOrigin: "bottom left",
+			}}
+			initial={{ scale: 0.9, opacity: 0 }}
+			animate={{ scale: 1, opacity: 1 }}
+			exit={{ scale: 0.9, opacity: 0 }}
+			transition={{ type: "spring", bounce: 0, duration: 0.35 }}
+		>
+			<motion.div
+				className="rounded-lg shadow-md p-4 bg-paper"
+				initial={{ backgroundColor: getBgColor(colorHue) }}
+				animate={{
+					backgroundColor: getBgColor(colorHue),
+				}}
+			>
+				<Form
+					className="flex flex-col gap-4 items-start"
 					action="/actions/createTag"
 					method="post"
 				>
@@ -61,13 +181,13 @@ export default function Submit() {
 					<div className="flex flex-col gap-2">
 						<label htmlFor="">Tag Name</label>
 						<input
-							className="border rounded-md py-1 px-2 w-64"
+							className="border border-gray-400 rounded-md py-1 px-2 w-64"
 							type="text"
 							name="tagName"
 						/>
 					</div>
 					<div className="flex flex-col gap-2">
-						<label htmlFor="">Color</label>
+						<label htmlFor="tagColor">Color</label>
 						<div className="grid grid-cols-6 gap-2 mb-2">
 							{
 								// 0 - 360 in 20 degree increments
@@ -94,67 +214,12 @@ export default function Submit() {
 					<button
 						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
 						type="submit"
+						onClick={toggleOpen}
 					>
 						Create Tag
 					</button>
 				</Form>
-				<Form
-					className="flex flex-col gap-4 items-start mb-12"
-					action="/actions/createNote"
-					method="post"
-				>
-					<h2 className="text-lg font-bold mb-4">Create New Note</h2>
-					<input type="hidden" name="redirectTo" value="/" />
-					<label htmlFor="noteTitle">Name</label>
-					<input
-						className="border rounded-md py-1 px-2 w-64"
-						type="text"
-						name="noteTitle"
-						id="noteTitle"
-					/>
-					<ClientOnly
-						fallback={<div style={{ width: 500, height: 300 }}></div>}
-					>
-						{() => <Quill defaultValue="Hello <b>Remix!</b>" />}
-					</ClientOnly>
-					<label htmlFor="tags">Tags</label>
-					<div className="flex gap-2">
-						{tags.map((tag) => {
-							const id = tag.id.toString();
-							return (
-								<label
-									htmlFor={id}
-									className="flex gap-2 px-2 py-[2px] rounded-full cursor-pointer"
-									style={{
-										backgroundColor: getColor(tag.hue),
-										color: getContrast(tag.hue),
-									}}
-									key={id}
-								>
-									<input type="checkbox" name={id} id={id} />
-									<span>{tag.name}</span>
-								</label>
-							);
-						})}
-					</div>
-					<div className="flex gap-6">
-						<div className="flex gap-2">
-							<input type="checkbox" name="isPublic" id="isPublic" />
-							<label htmlFor="isPublic">Public</label>
-						</div>
-						<div className="flex gap-2">
-							<input type="checkbox" name="isTodo" id="isTodo" />
-							<label htmlFor="isTodo">Todo</label>
-						</div>
-					</div>
-					<button
-						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
-						type="submit"
-					>
-						Create Note
-					</button>
-				</Form>
-			</main>
-		</>
+			</motion.div>
+		</motion.div>
 	);
 }
