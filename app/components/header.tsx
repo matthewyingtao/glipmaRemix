@@ -1,11 +1,12 @@
 import { Form, Link } from "@remix-run/react";
 import { IoLogOutOutline, IoSearchOutline } from "react-icons/io5";
+import Logo from "./logo";
 
 export default function Header() {
 	return (
 		<header className="flex justify-between mx-gutter py-8 items-center">
 			<Link to="/" prefetch="intent">
-				<h1 className="text-xl">glipma</h1>
+				<Logo className="hover:text-blue-500 transition-colors duration-100" />
 			</Link>
 
 			<div className="flex gap-4">

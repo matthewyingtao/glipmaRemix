@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import QuillCss from "quill/dist/quill.snow.css";
 import Header from "~/components/header";
 import Quill from "~/components/quill.client";
+import SidebarLayout from "~/components/sidebarLayout";
 import CustomQuillCss from "../components/quill.css";
 
 export const links: LinksFunction = () => [
@@ -63,79 +64,81 @@ export default function Submit() {
 		<>
 			<Header />
 			<main className="relative mx-gutter pt-4 pb-16">
-				<Form
-					className="flex flex-col gap-4 items-start mb-12"
-					action="/actions/createNote"
-					method="post"
-				>
-					<h1 className="text-5xl font-bold mb-6">Create New Note</h1>
-					<input type="hidden" name="redirectTo" value="/" />
-					<label htmlFor="noteTitle">Name</label>
-					<input
-						className="border border-gray-400 rounded-md py-1 px-2 w-64"
-						type="text"
-						name="noteTitle"
-						id="noteTitle"
-						maxLength={150}
-					/>
-					<ClientOnly
-						fallback={<div style={{ width: 500, height: 300 }}></div>}
+				<SidebarLayout>
+					<Form
+						className="flex flex-col gap-4 items-start mb-12"
+						action="/actions/createNote"
+						method="post"
 					>
-						{() => <Quill defaultValue="Hello <b>Remix!</b>" />}
-					</ClientOnly>
-					<label htmlFor="tags">Tags</label>
-					<div className="flex gap-2 flex-wrap">
-						{tags.map((tag) => {
-							const id = tag.id.toString();
-							return (
-								<label
-									htmlFor={id}
-									className="flex gap-2 px-2 py-[2px] rounded-full cursor-pointer"
-									style={{
-										backgroundColor: getColor(tag.hue),
-										color: getContrast(tag.hue),
-									}}
-									key={id}
-								>
-									<input type="checkbox" name={id} id={id} />
-									<span>{tag.name}</span>
-								</label>
-							);
-						})}
-						<button
-							type="button"
-							onClick={toggleCreatingNewTag}
-							className="underline text-blue-600"
-							ref={floatingReturn.reference}
-						>
-							Add another
-						</button>
-					</div>
-					<div className="flex gap-6">
-						<div className="flex gap-2">
-							<input type="checkbox" name="isPublic" id="isPublic" />
-							<label htmlFor="isPublic">Public</label>
-						</div>
-						<div className="flex gap-2">
-							<input type="checkbox" name="isTodo" id="isTodo" />
-							<label htmlFor="isTodo">Todo</label>
-						</div>
-					</div>
-					<button
-						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
-						type="submit"
-					>
-						Create Note
-					</button>
-				</Form>
-				<AnimatePresence>
-					{creatingNewTag && (
-						<CreateNewTag
-							floatingReturn={floatingReturn}
-							toggleOpen={toggleCreatingNewTag}
+						<h1 className="text-5xl font-bold mb-6">Create New Note</h1>
+						<input type="hidden" name="redirectTo" value="/" />
+						<label htmlFor="noteTitle">Name</label>
+						<input
+							className="border border-gray-400 rounded-md py-1 px-2 w-64"
+							type="text"
+							name="noteTitle"
+							id="noteTitle"
+							maxLength={150}
 						/>
-					)}
-				</AnimatePresence>
+						<ClientOnly
+							fallback={<div style={{ width: 500, height: 300 }}></div>}
+						>
+							{() => <Quill defaultValue="Hello <b>Remix!</b>" />}
+						</ClientOnly>
+						<label htmlFor="tags">Tags</label>
+						<div className="flex gap-2 flex-wrap">
+							{tags.map((tag) => {
+								const id = tag.id.toString();
+								return (
+									<label
+										htmlFor={id}
+										className="flex gap-2 px-2 py-[2px] rounded-full cursor-pointer"
+										style={{
+											backgroundColor: getColor(tag.hue),
+											color: getContrast(tag.hue),
+										}}
+										key={id}
+									>
+										<input type="checkbox" name={id} id={id} />
+										<span>{tag.name}</span>
+									</label>
+								);
+							})}
+							<button
+								type="button"
+								onClick={toggleCreatingNewTag}
+								className="underline text-blue-600"
+								ref={floatingReturn.reference}
+							>
+								Add another
+							</button>
+						</div>
+						<div className="flex gap-6">
+							<div className="flex gap-2">
+								<input type="checkbox" name="isPublic" id="isPublic" />
+								<label htmlFor="isPublic">Public</label>
+							</div>
+							<div className="flex gap-2">
+								<input type="checkbox" name="isTodo" id="isTodo" />
+								<label htmlFor="isTodo">Todo</label>
+							</div>
+						</div>
+						<button
+							className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
+							type="submit"
+						>
+							Create Note
+						</button>
+					</Form>
+					<AnimatePresence>
+						{creatingNewTag && (
+							<CreateNewTag
+								floatingReturn={floatingReturn}
+								toggleOpen={toggleCreatingNewTag}
+							/>
+						)}
+					</AnimatePresence>
+				</SidebarLayout>
 			</main>
 		</>
 	);
