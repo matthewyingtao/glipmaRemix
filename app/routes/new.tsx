@@ -53,7 +53,7 @@ export default function Submit() {
 	);
 
 	const floatingReturn = useFloating({
-		placement: "top-start",
+		placement: "top",
 		whileElementsMounted: autoUpdate,
 		middleware: [shift(), offset(12)],
 	});
@@ -82,9 +82,7 @@ export default function Submit() {
 					>
 						{() => <Quill defaultValue="Hello <b>Remix!</b>" />}
 					</ClientOnly>
-					<label htmlFor="tags" ref={floatingReturn.reference}>
-						Tags
-					</label>
+					<label htmlFor="tags">Tags</label>
 					<div className="flex gap-2 flex-wrap">
 						{tags.map((tag) => {
 							const id = tag.id.toString();
@@ -107,6 +105,7 @@ export default function Submit() {
 							type="button"
 							onClick={toggleCreatingNewTag}
 							className="underline text-blue-600"
+							ref={floatingReturn.reference}
 						>
 							Add another
 						</button>
@@ -158,7 +157,7 @@ function CreateNewTag({
 				position: strategy,
 				top: y ?? 0,
 				left: x ?? 0,
-				transformOrigin: "bottom left",
+				transformOrigin: "bottom",
 			}}
 			initial={{ scale: 0.9, opacity: 0 }}
 			animate={{ scale: 1, opacity: 1 }}
