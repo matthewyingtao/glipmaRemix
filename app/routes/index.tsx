@@ -41,21 +41,27 @@ export default function Index() {
 	return (
 		<>
 			<Header />
-			<main className="mx-gutter py-8">
+			<main className="mx-gutter pt-4 pb-16">
 				<h1 className="font-bold text-5xl mb-12">Your Notes</h1>
 				<div className="grid md:grid-cols-[auto_1fr] gap-x-12 gap-y-24">
 					<aside className="sticky top-12 flex flex-col gap-8 bg-paper bg-white rounded-2xl pl-6 pr-12 py-8 h-fit">
 						<div className="flex items-center gap-4 text-lg">
 							<IoFolderOpenOutline className="h-8 w-8" />
-							<Link to="/">Notes</Link>
+							<Link to="/" prefetch="intent">
+								Notes
+							</Link>
 						</div>
 						<div className="flex items-center gap-4 text-lg">
 							<FiSend className="h-8 w-8" />
-							<Link to="/new">Submit</Link>
+							<Link to="/new" prefetch="intent">
+								Submit
+							</Link>
 						</div>
 						<div className="flex items-center gap-4 text-lg">
 							<IoArchiveOutline className="h-8 w-8" />
-							<Link to="/">Archive</Link>
+							<Link to="/" prefetch="intent">
+								Archive
+							</Link>
 						</div>
 					</aside>
 

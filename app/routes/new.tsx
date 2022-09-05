@@ -9,6 +9,7 @@ import { authenticator } from "~/utils/auth.server";
 import { db } from "~/utils/db.server";
 import { getBgColor, getColor, getContrast } from "~/utils/utils";
 
+import type { Variants } from "framer-motion";
 import { AnimatePresence, motion } from "framer-motion";
 import QuillCss from "quill/dist/quill.snow.css";
 import Header from "~/components/header";
@@ -61,7 +62,7 @@ export default function Submit() {
 	return (
 		<>
 			<Header />
-			<main className="relative mx-gutter py-8">
+			<main className="relative mx-gutter pt-4 pb-16">
 				<Form
 					className="flex flex-col gap-4 items-start mb-12"
 					action="/actions/createNote"
@@ -150,6 +151,11 @@ function CreateNewTag({
 	const { x, y, floating, strategy } = floatingReturn;
 	const [colorHue, setColorHue] = useState(0);
 
+	const dialogVariants: Variants = {
+		hidden: { scale: 0.9, opacity: 0 },
+		visible: { scale: 1, opacity: 1 },
+	};
+
 	return (
 		<motion.div
 			ref={floating}
@@ -159,9 +165,10 @@ function CreateNewTag({
 				left: x ?? 0,
 				transformOrigin: "bottom",
 			}}
-			initial={{ scale: 0.9, opacity: 0 }}
-			animate={{ scale: 1, opacity: 1 }}
-			exit={{ scale: 0.9, opacity: 0 }}
+			variants={dialogVariants}
+			initial="hidden"
+			animate="visible"
+			exit="hidden"
 			transition={{ type: "spring", bounce: 0, duration: 0.35 }}
 		>
 			<motion.div
@@ -216,6 +223,10 @@ function CreateNewTag({
 					<input type="hidden" name="tagColor" value={colorHue} />
 					<button
 						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
+						style={{
+							backgroundColor: getColor(colorHue),
+							color: getContrast(colorHue),
+						}}
 						type="submit"
 						onClick={toggleOpen}
 					>
