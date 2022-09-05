@@ -6,7 +6,7 @@ export default function Login() {
 			<Form
 				action="/auth/discord"
 				method="post"
-				className="px-6 py-12 rounded-2xl bg-white bg-paper text-center"
+				className="px-6 py-12 rounded-2xl bg-white bg-paper text-center shadow-md"
 			>
 				<div className="mb-12">
 					<h1 className="text-4xl font-bold mb-4">glipma</h1>
