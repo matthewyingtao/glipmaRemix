@@ -5,10 +5,12 @@ import { authenticator } from "~/utils/auth.server";
 export const loader: LoaderFunction = ({ request }) => {
 	const url = new URL(request.url);
 
+	// if the url '/auth/discord/callback' is accessed directly
 	if (url.searchParams.entries().next().done) {
 		return redirect("/login");
 	}
 
+	// if the discord auth is cancelled or fails
 	const error = url.searchParams.get("error");
 	if (error) {
 		return redirect("/login");
