@@ -51,7 +51,7 @@ export default function Index() {
 						</div>
 						<div className="flex items-center gap-4 text-lg">
 							<FiSend className="h-8 w-8" />
-							<Link to="/submit">Submit</Link>
+							<Link to="/new">Submit</Link>
 						</div>
 						<div className="flex items-center gap-4 text-lg">
 							<IoArchiveOutline className="h-8 w-8" />

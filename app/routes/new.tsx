@@ -177,7 +177,7 @@ function CreateNewTag({
 					method="post"
 				>
 					<h2 className="text-lg font-bold">Create New Tag</h2>
-					<input type="hidden" name="redirectTo" value="/submit" required />
+					<input type="hidden" name="redirectTo" value="/new" required />
 					<div className="flex flex-col gap-2">
 						<label htmlFor="">Tag Name</label>
 						<input
