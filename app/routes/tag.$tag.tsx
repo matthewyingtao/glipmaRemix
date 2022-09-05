@@ -37,6 +37,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 		include: {
 			tags: true,
 		},
+		orderBy: {
+			createdAt: "desc",
+		},
 	});
 
 	return {
