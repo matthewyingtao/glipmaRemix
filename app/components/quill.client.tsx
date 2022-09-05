@@ -50,7 +50,7 @@ export default function Quill({ defaultValue }: { defaultValue?: string }) {
 	}, [quill, defaultValue, onChange]);
 
 	return (
-		<div className="flex flex-col w-full max-w-4xl h-96 bg-paper bg-white rounded-lg border border-gray-400">
+		<div className="flex flex-col w-full max-w-4xl h-96 bg-paper bg-white rounded-lg border border-gray-600">
 			<div ref={quillRef} />
 			<input type="hidden" name="noteContent" value={JSON.stringify(content)} />
 		</div>
