@@ -152,7 +152,7 @@ function CreateNewTag({
 	const [colorHue, setColorHue] = useState(0);
 
 	const dialogVariants: Variants = {
-		hidden: { scale: 0.9, opacity: 0 },
+		hidden: { scale: 0.5, opacity: 0 },
 		visible: { scale: 1, opacity: 1 },
 	};
 
@@ -169,7 +169,7 @@ function CreateNewTag({
 			initial="hidden"
 			animate="visible"
 			exit="hidden"
-			transition={{ type: "spring", bounce: 0, duration: 0.35 }}
+			transition={{ type: "spring", bounce: 0, duration: 0.25 }}
 		>
 			<motion.div
 				className="relative flex justify-center rounded-lg drop-shadow-md p-4 bg-paper"
@@ -221,9 +221,13 @@ function CreateNewTag({
 						</div>
 					</div>
 					<input type="hidden" name="tagColor" value={colorHue} />
-					<button
-						className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
-						style={{
+					<motion.button
+						className="bg-paper px-6 py-2 rounded-full shadow-sm"
+						initial={{
+							backgroundColor: getColor(colorHue),
+							color: getContrast(colorHue),
+						}}
+						animate={{
 							backgroundColor: getColor(colorHue),
 							color: getContrast(colorHue),
 						}}
@@ -231,7 +235,7 @@ function CreateNewTag({
 						onClick={toggleOpen}
 					>
 						Create Tag
-					</button>
+					</motion.button>
 				</Form>
 				<motion.div
 					initial={{ backgroundColor: getBgColor(colorHue) }}
