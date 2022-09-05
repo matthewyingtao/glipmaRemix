@@ -8,27 +8,32 @@ export default function NoteCard({
 	note: NoteWithTags;
 }) {
 	return (
-		<div className="bg-paper bg-yellow-200 p-8 rounded-2xl shadow-md" key={id}>
-			<div className="flex gap-4 items-center mb-4 justify-between">
-				<h3 className="text-lg text-gray-700 font-bold">{title}</h3>
-				<div className="flex gap-2">
+		<div
+			className="bg-paper bg-yellow-200 p-8 pt-0 rounded-2xl shadow-md"
+			key={id}
+		>
+			<header className="flex flex-col gap-2 mb-4">
+				<div className="flex flex-wrap gap-2">
 					{tags?.map((tag) => {
 						return (
-							<Link to={`/tag/${tag.name}`} key={tag.id}>
-								<span
-									className="flex justify-center items-center px-3 py-[2px] rounded-full"
-									style={{
-										backgroundColor: getColor(tag.hue),
-										color: getContrast(tag.hue),
-									}}
-								>
-									{tag.name}
-								</span>
+							<Link
+								className="whitespace-nowrap px-3 py-[2px] rounded-full -translate-y-[50%]"
+								style={{
+									backgroundColor: getColor(tag.hue),
+									color: getContrast(tag.hue),
+								}}
+								to={`/tag/${tag.name}`}
+								key={tag.id}
+							>
+								{tag.name}
 							</Link>
 						);
 					})}
 				</div>
-			</div>
+				<h3 className="text-lg flex-shrink-0 text-gray-700 font-bold">
+					{title}
+				</h3>
+			</header>
 			<div dangerouslySetInnerHTML={{ __html: content }} />
 		</div>
 	);
