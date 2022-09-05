@@ -75,6 +75,7 @@ export default function Submit() {
 						type="text"
 						name="noteTitle"
 						id="noteTitle"
+						maxLength={150}
 					/>
 					<ClientOnly
 						fallback={<div style={{ width: 500, height: 300 }}></div>}
@@ -184,6 +185,9 @@ function CreateNewTag({
 							className="border border-gray-400 rounded-md py-1 px-2 w-64"
 							type="text"
 							name="tagName"
+							required
+							minLength={1}
+							maxLength={40}
 						/>
 					</div>
 					<div className="flex flex-col gap-2">
