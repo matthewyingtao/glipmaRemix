@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import type { NoteWithTags } from "~/types";
 import { getColor, getContrast } from "~/utils/utils";
 
@@ -13,7 +14,7 @@ export default function NoteCard({
 				<div className="flex gap-2">
 					{tags?.map((tag) => {
 						return (
-							<div key={tag.id}>
+							<Link to={`/tag/${tag.name}`} key={tag.id}>
 								<span
 									className="flex justify-center items-center px-3 py-[2px] rounded-full"
 									style={{
@@ -23,7 +24,7 @@ export default function NoteCard({
 								>
 									{tag.name}
 								</span>
-							</div>
+							</Link>
 						);
 					})}
 				</div>

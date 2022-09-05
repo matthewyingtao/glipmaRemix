@@ -1,8 +1,9 @@
 import { Form, Link } from "@remix-run/react";
 import { IoLogOutOutline, IoSearchOutline } from "react-icons/io5";
+import type { AuthUserData } from "~/utils/auth.server";
 import Logo from "./logo";
 
-export default function Header() {
+export default function Header({ userId, pfp }: AuthUserData) {
 	return (
 		<header className="flex justify-between mx-gutter py-8 items-center">
 			<Link to="/" prefetch="intent">
@@ -28,6 +29,16 @@ export default function Header() {
 						<IoSearchOutline className="w-5 h-5" />
 					</button>
 				</Form>
+				<Link
+					to={`/user/${userId}`}
+					className="flex h-12 w-12 bg-blue-200 rounded-full overflow-hidden text-gray-900"
+				>
+					<img
+						src={`https://cdn.discordapp.com/avatars/${userId}/${pfp}.png`}
+						alt=""
+						className="w-full h-full"
+					/>
+				</Link>
 				<Form action="/auth/logout" method="post" className="flex">
 					<button type="submit" aria-label="logout">
 						<IoLogOutOutline className="h-12 w-12 p-2 pr-0 bg-purple-200 hover:bg-purple-300 transition-colors rounded-full" />

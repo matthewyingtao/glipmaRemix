@@ -3,17 +3,20 @@ import { redirect } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import Header from "~/components/header";
 import NoteCard from "~/components/noteCard";
+import SidebarLayout from "~/components/sidebarLayout";
 import type { NoteWithTags } from "~/types";
+import type { AuthUserData } from "~/utils/auth.server";
 import { authenticator } from "~/utils/auth.server";
 import { db } from "~/utils/db.server";
 
 type LoaderData = {
+	userData: AuthUserData;
 	notes?: NoteWithTags[] | null;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-	const userId = await authenticator.isAuthenticated(request);
-	const isLoggedIn = userId !== null;
+	const { userId, pfp } = (await authenticator.isAuthenticated(request)) || {};
+	const isLoggedIn = userId !== undefined;
 
 	if (!isLoggedIn) return redirect("/login");
 
@@ -35,27 +38,35 @@ export const loader: LoaderFunction = async ({ request }) => {
 		},
 	});
 
-	return { notes };
+	return {
+		userData: { userId, pfp },
+		notes,
+	};
 };
 
 export default function Search() {
-	const { notes } = useLoaderData<LoaderData>();
+	const { notes, userData } = useLoaderData<LoaderData>();
 	const [searchParams] = useSearchParams();
 
 	const query = searchParams.get("q");
 
 	return (
 		<>
-			<Header />
+			<Header userId={userData.userId} pfp={userData.pfp} />
 			<main className="mx-gutter pt-4 pb-16">
-				<div className="mx-auto max-w-4xl">
-					<h1 className="font-bold text-5xl mb-12">Results for: "{query}"</h1>
-					<div className="flex flex-col gap-8">
-						{notes?.map((note) => (
-							<NoteCard key={note.id} note={note as unknown as NoteWithTags} />
-						))}
+				<SidebarLayout>
+					<div>
+						<h1 className="font-bold text-5xl mb-12">Results for: "{query}"</h1>
+						<div className="flex flex-col gap-8">
+							{notes?.map((note) => (
+								<NoteCard
+									key={note.id}
+									note={note as unknown as NoteWithTags}
+								/>
+							))}
+						</div>
 					</div>
-				</div>
+				</SidebarLayout>
 			</main>
 		</>
 	);

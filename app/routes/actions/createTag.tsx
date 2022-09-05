@@ -6,8 +6,8 @@ import { db } from "~/utils/db.server";
 export const loader: LoaderFunction = () => redirect("/");
 
 export const action: ActionFunction = async ({ request }) => {
-	const userId = await authenticator.isAuthenticated(request);
-	const isLoggedIn = userId !== null;
+	const { userId } = (await authenticator.isAuthenticated(request)) || {};
+	const isLoggedIn = userId !== undefined;
 
 	if (!isLoggedIn) return redirect("/");
 

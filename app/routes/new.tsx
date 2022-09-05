@@ -5,6 +5,7 @@ import { redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { useReducer, useState } from "react";
 import { ClientOnly } from "remix-utils";
+import type { AuthUserData } from "~/utils/auth.server";
 import { authenticator } from "~/utils/auth.server";
 import { db } from "~/utils/db.server";
 import { getBgColor, getColor, getContrast } from "~/utils/utils";
@@ -23,6 +24,7 @@ export const links: LinksFunction = () => [
 ];
 
 type LoaderData = {
+	userData: AuthUserData;
 	tags: {
 		id: number;
 		name: string;
@@ -31,8 +33,8 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-	const userId = await authenticator.isAuthenticated(request);
-	const isLoggedIn = userId !== null;
+	const { userId, pfp } = (await authenticator.isAuthenticated(request)) || {};
+	const isLoggedIn = userId !== undefined;
 
 	if (!isLoggedIn) return redirect("/login");
 
@@ -43,12 +45,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 	});
 
 	return {
+		userData: { userId, pfp },
 		tags: tags.map((tag) => ({ id: tag.id, name: tag.name, hue: tag.hue })),
 	};
 };
 
 export default function Submit() {
-	const { tags } = useLoaderData<LoaderData>();
+	const { tags, userData } = useLoaderData<LoaderData>();
 	const [creatingNewTag, toggleCreatingNewTag] = useReducer(
 		(prev) => !prev,
 		false
@@ -62,7 +65,7 @@ export default function Submit() {
 
 	return (
 		<>
-			<Header />
+			<Header userId={userData.userId} pfp={userData.pfp} />
 			<main className="relative mx-gutter pt-4 pb-16">
 				<SidebarLayout>
 					<Form

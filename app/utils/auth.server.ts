@@ -22,7 +22,12 @@ const createUser = async (profile: DiscordProfile): Promise<User> => {
 	return user;
 };
 
-export const authenticator = new Authenticator<string>(storage);
+export interface AuthUserData {
+	userId: string;
+	pfp: string;
+}
+
+export const authenticator = new Authenticator<AuthUserData>(storage);
 
 authenticator.use(
 	new DiscordStrategy(
@@ -34,10 +39,11 @@ authenticator.use(
 		async ({ profile }) => {
 			const userExists = await getUser(profile.id);
 
-			if (userExists !== null) return userExists.id;
+			if (userExists !== null)
+				return { userId: userExists.id, pfp: userExists.profilePicture || "" };
 
 			const user = await createUser(profile);
-			return user.id;
+			return { userId: user.id, pfp: user.profilePicture || "" };
 		}
 	)
 );
