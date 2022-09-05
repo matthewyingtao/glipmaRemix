@@ -73,11 +73,15 @@ export default function Submit() {
 						action="/actions/createNote"
 						method="post"
 					>
-						<h1 className="text-5xl font-bold mb-6">Create New Note</h1>
+						<h1 className="text-5xl font-bold mb-12 underline decoration-wavy decoration-blue-500 underline-offset-8 decoration-4">
+							Create New Note
+						</h1>
 						<input type="hidden" name="redirectTo" value="/" />
-						<label htmlFor="noteTitle">Name</label>
+						<label className="text-lg font-bold" htmlFor="noteTitle">
+							Name
+						</label>
 						<input
-							className="border border-gray-400 rounded-md py-1 px-2 w-64"
+							className="border border-gray-600 rounded-md py-1 px-2 w-64"
 							type="text"
 							name="noteTitle"
 							id="noteTitle"
@@ -88,14 +92,16 @@ export default function Submit() {
 						>
 							{() => <Quill defaultValue="Hello <b>Remix!</b>" />}
 						</ClientOnly>
-						<label htmlFor="tags">Tags</label>
+						<label className="text-lg font-bold" htmlFor="tags">
+							Tags
+						</label>
 						<div className="flex gap-2 flex-wrap">
 							{tags.map((tag) => {
 								const id = tag.id.toString();
 								return (
 									<label
 										htmlFor={id}
-										className="flex gap-2 px-2 py-[2px] rounded-full cursor-pointer"
+										className="flex items-center gap-2 px-3 py-[2px] rounded-full cursor-pointer border border-gray-600"
 										style={{
 											backgroundColor: getColor(tag.hue),
 											color: getContrast(tag.hue),
@@ -117,17 +123,20 @@ export default function Submit() {
 							</button>
 						</div>
 						<div className="flex gap-6">
-							<div className="flex gap-2">
+							<label
+								className="flex gap-2 text-lg font-bold"
+								htmlFor="isPublic"
+							>
 								<input type="checkbox" name="isPublic" id="isPublic" />
-								<label htmlFor="isPublic">Public</label>
-							</div>
-							<div className="flex gap-2">
+								<span>Public</span>
+							</label>
+							<label className="flex gap-2 text-lg font-bold" htmlFor="isTodo">
 								<input type="checkbox" name="isTodo" id="isTodo" />
-								<label htmlFor="isTodo">Todo</label>
-							</div>
+								<span>Todo</span>
+							</label>
 						</div>
 						<button
-							className="bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
+							className="border border-gray-600 bg-blue-200 hover:bg-blue-300 transition-colors bg-paper px-6 py-2 rounded-full shadow-sm"
 							type="submit"
 						>
 							Create Note
@@ -178,7 +187,7 @@ function CreateNewTag({
 			transition={{ type: "spring", bounce: 0, duration: 0.25 }}
 		>
 			<motion.div
-				className="relative flex justify-center rounded-lg drop-shadow-md p-4 bg-paper"
+				className="relative flex justify-center rounded-lg drop-shadow-md p-4 bg-paper border border-gray-400"
 				initial={{ backgroundColor: getBgColor(colorHue) }}
 				animate={{
 					backgroundColor: getBgColor(colorHue),
@@ -194,7 +203,7 @@ function CreateNewTag({
 					<div className="flex flex-col gap-2">
 						<label htmlFor="">Tag Name</label>
 						<input
-							className="border border-gray-400 rounded-md py-1 px-2 w-64"
+							className="border border-gray-600 rounded-md py-1 px-2 w-64"
 							type="text"
 							name="tagName"
 							required
@@ -212,7 +221,7 @@ function CreateNewTag({
 									return (
 										<button
 											key={hue}
-											className={`h-8 w-8 rounded-md border transition-all ${
+											className={`h-8 w-8 rounded-md border border-gray-600 transition-all ${
 												hue === colorHue
 													? "border-black shadow-lg scale-110"
 													: "border-gray-500 opacity-60 scale-90"
@@ -228,7 +237,7 @@ function CreateNewTag({
 					</div>
 					<input type="hidden" name="tagColor" value={colorHue} />
 					<motion.button
-						className="bg-paper px-6 py-2 rounded-full shadow-sm"
+						className="bg-paper px-6 py-2 rounded-full shadow-sm border border-gray-600"
 						initial={{
 							backgroundColor: getColor(colorHue),
 							color: getContrast(colorHue),

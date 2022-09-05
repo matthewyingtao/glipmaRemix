@@ -9,14 +9,14 @@ export default function SidebarLayout({
 }) {
 	return (
 		<div className="grid md:grid-cols-[auto_1fr] gap-x-12 gap-y-24">
-			<aside className="sticky top-12 flex flex-col gap-8 bg-paper bg-white rounded-2xl pl-6 pr-12 py-8 h-fit">
+			<aside className="sticky top-12 flex flex-col gap-8 bg-paper bg-white border border-gray-400 rounded-2xl pl-6 pr-12 py-8 h-fit">
 				<Link
 					to="/"
 					prefetch="intent"
 					className="flex items-center gap-4 text-lg group"
 				>
 					<IoFolderOpenOutline className="h-8 w-8 group-hover:text-blue-500 transition-colors" />
-					<span className="group-hover:translate-x-[2px] transition-transform">
+					<span className="group-hover:translate-x-[2px] group-hover:underline decoration-wavy decoration-blue-500 underline-offset-1 transition-transform">
 						Notes
 					</span>
 				</Link>
@@ -26,7 +26,7 @@ export default function SidebarLayout({
 					className="flex items-center gap-4 text-lg group"
 				>
 					<FiSend className="h-8 w-8 group-hover:text-blue-500 transition-colors" />
-					<span className="group-hover:translate-x-[2px] transition-transform">
+					<span className="group-hover:translate-x-[2px] group-hover:underline decoration-wavy decoration-blue-500 underline-offset-1 transition-transform">
 						Submit
 					</span>
 				</Link>
@@ -36,7 +36,7 @@ export default function SidebarLayout({
 					className="flex items-center gap-4 text-lg group"
 				>
 					<IoArchiveOutline className="h-8 w-8 group-hover:text-blue-500 transition-colors" />
-					<span className="group-hover:translate-x-[2px] transition-transform">
+					<span className="group-hover:translate-x-[2px] group-hover:underline decoration-wavy decoration-blue-500 underline-offset-1 transition-transform">
 						Archive
 					</span>
 				</Link>

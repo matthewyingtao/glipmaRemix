@@ -56,7 +56,9 @@ export default function Search() {
 			<main className="mx-gutter pt-4 pb-16">
 				<SidebarLayout>
 					<div>
-						<h1 className="font-bold text-5xl mb-12">Results for: "{query}"</h1>
+						<h1 className="font-bold text-5xl mb-20 underline decoration-wavy decoration-blue-500 underline-offset-8 decoration-4">
+							Results for: "{query}"
+						</h1>
 						<div className="flex flex-col gap-8">
 							{notes?.map((note) => (
 								<NoteCard

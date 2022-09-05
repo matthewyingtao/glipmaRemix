@@ -9,7 +9,7 @@ export default function NoteCard({
 }) {
 	return (
 		<div
-			className="bg-paper bg-yellow-200 p-8 pt-0 rounded-2xl shadow-md"
+			className="bg-paper bg-yellow-100 border border-gray-400 p-8 pt-0 rounded-2xl shadow-md"
 			key={id}
 		>
 			<header className="flex flex-col gap-2 mb-4">
@@ -17,7 +17,7 @@ export default function NoteCard({
 					{tags?.map((tag) => {
 						return (
 							<Link
-								className="whitespace-nowrap px-3 py-[2px] rounded-full -translate-y-[50%]"
+								className="whitespace-nowrap px-3 py-[2px] rounded-full -translate-y-[50%] border border-gray-600"
 								style={{
 									backgroundColor: getColor(tag.hue),
 									color: getContrast(tag.hue),
