@@ -165,14 +165,14 @@ function CreateNewTag({
 			transition={{ type: "spring", bounce: 0, duration: 0.35 }}
 		>
 			<motion.div
-				className="rounded-lg shadow-md p-4 bg-paper"
+				className="relative flex justify-center rounded-lg drop-shadow-md p-4 bg-paper"
 				initial={{ backgroundColor: getBgColor(colorHue) }}
 				animate={{
 					backgroundColor: getBgColor(colorHue),
 				}}
 			>
 				<Form
-					className="flex flex-col gap-4 items-start"
+					className="flex flex-col gap-4 items-center text-center"
 					action="/actions/createTag"
 					method="post"
 				>
@@ -222,6 +222,16 @@ function CreateNewTag({
 						Create Tag
 					</button>
 				</Form>
+				<motion.div
+					initial={{ backgroundColor: getBgColor(colorHue) }}
+					animate={{
+						backgroundColor: getBgColor(colorHue),
+					}}
+					className="absolute top-full h-4 w-4 bg-paper"
+					style={{
+						clipPath: "polygon(0 0, 50% 100%, 100% 0)",
+					}}
+				/>
 			</motion.div>
 		</motion.div>
 	);
