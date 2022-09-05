@@ -7,7 +7,7 @@ import { storage } from "~/utils/session.server";
 import { db } from "./db.server";
 
 const getUser = async (id: string): Promise<User | null> =>
-	await db.user.findFirst({
+	await db.user.findUnique({
 		where: { id },
 	});
 
@@ -35,7 +35,6 @@ authenticator.use(
 			const userExists = await getUser(profile.id);
 
 			if (userExists !== null) return userExists.id;
-
 
 			const user = await createUser(profile);
 			return user.id;

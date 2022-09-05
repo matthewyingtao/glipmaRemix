@@ -20,7 +20,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 	if (!isLoggedIn) return redirect("/login");
 
-	const user = await db.user.findFirst({
+	const user = await db.user.findUnique({
 		where: {
 			id: userId,
 		},
